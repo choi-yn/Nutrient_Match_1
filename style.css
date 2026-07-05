@@ -1,0 +1,268 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bowl-width: 168px;
+    --bowl-height: 136px;
+    --bowl-margin: 6px;
+    --bowl-gap: 14px;
+    --game-row-width: calc(5 * (var(--bowl-width) + 2 * var(--bowl-margin)) + 4 * var(--bowl-gap));
+    --food-size: 130px;
+}
+
+html,
+body {
+    min-height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 12px;
+    background-color: #f0f0f0;
+}
+
+body.dragging-active {
+    touch-action: none;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 1.6rem;
+}
+
+p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 10px 0;
+    flex: 1;
+}
+
+.food-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: var(--game-row-width);
+    max-width: 100%;
+    min-height: calc(var(--food-size) + 24px);
+    padding: 12px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.food-item {
+    width: var(--food-size);
+    height: var(--food-size);
+    cursor: grab;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.food-item.picked-up {
+    opacity: 0.35;
+    transform: scale(0.95);
+}
+
+.food-item img {
+    max-width: 82%;
+    max-height: 82%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.bowls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--bowl-gap);
+    width: var(--game-row-width);
+    max-width: 100%;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+.bowl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bowl-area {
+    width: var(--bowl-width);
+    height: var(--bowl-height);
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    margin: var(--bowl-margin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.bowl-area[data-type="carbohydrate"] {
+    background-image: url('images/탄수화물\ 그릇.gif');
+}
+
+.bowl-area[data-type="vitamin"] {
+    background-image: url('images/비타민\ 그릇.gif');
+}
+
+.bowl-area[data-type="protein"] {
+    background-image: url('images/단백질\ 그릇.gif');
+}
+
+.bowl-area[data-type="fat"] {
+    background-image: url('images/지방\ 그릇.gif');
+}
+
+.bowl-area[data-type="calcium"] {
+    background-image: url('images/칼슘\ 그릇.gif');
+}
+
+.bowl-area.drag-over {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: #666;
+    transform: scale(1.03);
+}
+
+.nutrient-btn {
+    padding: 8px 14px;
+    margin: 2px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nutrient-btn[data-nutrient="비타민"] {
+    background-color: #98FB98;
+}
+
+.nutrient-btn[data-nutrient="탄수화물"] {
+    min-width: 0;
+    background-color: #FFA500;
+    white-space: nowrap;
+}
+
+.nutrient-btn[data-nutrient="단백질"] {
+    background-color: #9370DB;
+}
+
+.nutrient-btn[data-nutrient="지방"] {
+    background-color: #FFD6E0;
+    color: #B8506E;
+    border: 2px solid #FFB3C6;
+}
+
+.nutrient-btn[data-nutrient="칼슘"] {
+    background-color: #B0E0E6;
+}
+
+.nutrient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: var(--game-row-width);
+    max-width: 100%;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin: 5px auto;
+    flex-shrink: 0;
+}
+
+.score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.restart-btn {
+    padding: 8px 16px;
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.drag-ghost {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #bbb;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1);
+    transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.drag-ghost-pop {
+    transform: scale(1.28);
+}
+
+.drag-ghost img {
+    max-width: 82%;
+    max-height: 82%;
+    object-fit: contain;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>식품분류하기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>식품분류하기</h1>
+        <p class="description">아래 음식에 어떤 영양소가 많이 들어있는지 알맞는 칸에 넣어보세요.</p>
+        
+        <div class="score-container">
+            <div class="score">점수: <span id="score">0</span></div>
+            <button id="restartBtn" class="restart-btn">다시 시작하기</button>
+        </div>
+        
+        <div class="game-area">
+            <div class="food-container" id="foodContainer">
+                <!-- 음식 이미지들이 여기에 동적으로 추가됩니다 -->
+            </div>
+            
+            <div class="bowls">
+                <div class="bowl" data-type="carbohydrate">
+                    <div class="bowl-area" data-type="carbohydrate">
+                        <button class="nutrient-btn" data-nutrient="탄수화물">탄수화물</button>
+                    </div>
+                </div>
+                <div class="bowl" data-type="vitamin">
+                    <div class="bowl-area" data-type="vitamin">
+                        <button class="nutrient-btn" data-nutrient="비타민">비타민</button>
+                    </div>
+                </div>
+                <div class="bowl" data-type="protein">
+                    <div class="bowl-area" data-type="protein">
+                        <button class="nutrient-btn" data-nutrient="단백질">단백질</button>
+                    </div>
+                </div>
+                <div class="bowl" data-type="fat">
+                    <div class="bowl-area" data-type="fat">
+                        <button class="nutrient-btn" data-nutrient="지방">지방</button>
+                    </div>
+                </div>
+                <div class="bowl" data-type="calcium">
+                    <div class="bowl-area" data-type="calcium">
+                        <button class="nutrient-btn" data-nutrient="칼슘">칼슘</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
