@@ -61,19 +61,37 @@ p {
 }
 
 .food-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: var(--game-row-width);
+    max-width: 100%;
+    height: calc(var(--food-size) + 24px);
+    min-height: calc(var(--food-size) + 24px);
+    padding: 12px;
+    margin: 0 auto;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.food-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 12px;
-    width: var(--game-row-width);
-    max-width: 100%;
-    min-height: calc(var(--food-size) + 24px);
-    padding: 12px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    height: 100%;
+    min-height: var(--food-size);
+}
+
+.food-container.activity-complete .food-items {
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .food-item {
@@ -206,7 +224,7 @@ p {
 
 .score-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: var(--game-row-width);
     max-width: 100%;
@@ -223,23 +241,57 @@ p {
     color: #333;
 }
 
+.restart-wrapper {
+    position: absolute;
+    inset: 12px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.restart-wrapper.visible {
+    display: flex;
+}
+
 .restart-btn {
-    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 36px;
     margin: 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 24px;
     font-weight: bold;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+    animation: restart-bounce 2s ease-in-out infinite;
+}
+
+.restart-btn i {
+    font-size: 26px;
 }
 
 .restart-btn:hover {
     background-color: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.45);
+}
+
+.restart-btn:active {
+    transform: scale(0.96);
+}
+
+@keyframes restart-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 .drag-ghost {

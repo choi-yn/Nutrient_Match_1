@@ -37,6 +37,32 @@ function updateScore() {
     }
 }
 
+function hideRestartButton() {
+    const foodContainer = document.getElementById('foodContainer');
+    const restartWrapper = document.querySelector('.restart-wrapper');
+    if (foodContainer) {
+        foodContainer.classList.remove('activity-complete');
+    }
+    if (restartWrapper) {
+        restartWrapper.classList.remove('visible');
+    }
+}
+
+function checkActivityComplete() {
+    const foodItems = document.getElementById('foodItems');
+    const foodContainer = document.getElementById('foodContainer');
+    const restartWrapper = document.querySelector('.restart-wrapper');
+    if (!foodItems || !foodContainer || !restartWrapper) return;
+
+    const totalFoods = foodItems.querySelectorAll('.food-item').length;
+    const placedFoods = foodItems.querySelectorAll('.food-item.placed').length;
+
+    if (totalFoods > 0 && placedFoods === totalFoods) {
+        foodContainer.classList.add('activity-complete');
+        restartWrapper.classList.add('visible');
+    }
+}
+
 function pickRandomFoodsOnePerCategory() {
     const selectedFoods = NUTRIENT_TYPES.map(type => {
         const categoryFoods = foods.filter(food => food.type === type);
@@ -183,6 +209,7 @@ function handleDrop(foodItem, clientX, clientY) {
         updateScore();
         foodItem.classList.add('placed');
         foodItem.style.visibility = 'hidden';
+        checkActivityComplete();
     } else {
         playSound('sounds/Error3.mp3');
         score = Math.max(0, score - 1);
@@ -296,11 +323,12 @@ function setupFoodInteraction(foodItem, food) {
 }
 
 function createFoodItems() {
-    const foodContainer = document.getElementById('foodContainer');
-    if (!foodContainer) return;
+    const foodItems = document.getElementById('foodItems');
+    if (!foodItems) return;
 
     endDrag();
-    foodContainer.innerHTML = '';
+    hideRestartButton();
+    foodItems.innerHTML = '';
 
     const selectedFoods = pickRandomFoodsOnePerCategory();
 
@@ -318,7 +346,7 @@ function createFoodItems() {
 
         foodItem.appendChild(img);
         setupFoodInteraction(foodItem, food);
-        foodContainer.appendChild(foodItem);
+        foodItems.appendChild(foodItem);
     });
 }
 

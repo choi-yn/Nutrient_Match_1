@@ -14,12 +14,16 @@
         
         <div class="score-container">
             <div class="score">점수: <span id="score">0</span></div>
-            <button id="restartBtn" class="restart-btn">다시 시작하기</button>
         </div>
-        
         <div class="game-area">
             <div class="food-container" id="foodContainer">
-                <!-- 음식 이미지들이 여기에 동적으로 추가됩니다 -->
+                <div class="food-items" id="foodItems"></div>
+                <div class="restart-wrapper">
+                    <button id="restartBtn" class="restart-btn">
+                        <i class="fas fa-redo" aria-hidden="true"></i>
+                        <span>다시하기</span>
+                    </button>
+                </div>
             </div>
             
             <div class="bowls">
